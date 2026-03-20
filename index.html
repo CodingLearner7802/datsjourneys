@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Đạt và những chuyến đi</title>
+<style>
+:root {
+--bg-color: #0f172a;
+--card-bg: #1e293b;
+--accent-color: #38bdf8;
+--text-color: #f8fafc;
+--highlight: #fb923c;
+--danger: #ef4444;
+--success: #16a34a;
+--font-main: Arial, sans-serif;
+}
+body {
+font-family: var(--font-main);
+background-color: var(--bg-color);
+color: var(--text-color);
+margin: 0;
+padding: 40px 20px;
+display: flex;
+flex-direction: column;
+align-items: center;
+-webkit-tap-highlight-color: transparent;
+}
+header h1 {
+text-transform: uppercase;
+font-size: 2rem;
+color: var(--accent-color);
+border-bottom: 4px solid var(--highlight);
+display: inline-block;
+margin-bottom: 40px;
+text-align: center;
+}
+.gallery {
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+gap: 30px;
+width: 100%;
+max-width: 1200px;
+}
+.trip-card {
+width: 100%;
+max-width: 340px;
+background: var(--card-bg);
+border-radius: 15px;
+overflow: hidden;
+border: 1px solid #334155;
+display: flex;
+flex-direction: column;
+}
+.image-container {
+width: 100%;
+height: 220px;
+background: #334155;
+display: flex;
+align-items: center;
+justify-content: center;
+overflow: hidden;
+}
+.image-container img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+}
+.card-header-btn { padding: 15px; }
+.btn {
+width: 100%;
+padding: 14px;
+border-radius: 10px;
+border: none;
+font-weight: bold;
+cursor: pointer;
+font-size: 1rem;
+font-family: var(--font-main);
+display: block;
+}
+.btn-toggle { background: #475569; color: white; }
+.details-container {
+display: none;
+background: rgba(0, 0, 0, 0.2);
+}
+.details-inner {
+padding: 15px;
+display: flex;
+flex-direction: column;
+gap: 12px;
+}
+.btn-row { display: flex; gap: 10px; }
+.btn-upload { flex: 2; background: #334155; color: var(--accent-color); border: 1px dashed var(--accent-color); }
+.btn-delete { flex: 1; background: #334155; color: #94a3b8; font-size: 0.8rem; }
+textarea {
+width: 100%;
+height: 100px;
+background: #0f172a;
+border: 1px solid #475569;
+color: white;
+padding: 12px;
+border-radius: 10px;
+resize: none;
+box-sizing: border-box;
+font-family: var(--font-main);
+font-size: 1rem;
+}
+.btn-save { background: var(--accent-color); color: #0f172a; }
+.success { background: var(--success) !important; color: white !important; }
+.admin-footer { margin-top: 30px; }
+.btn-clear { background: none; border: 1px solid var(--danger); color: var(--danger); padding: 8px; border-radius: 5px; cursor: pointer; font-size: 0.7rem; }
+</style>
+</head>
+<body>
+<header>
+<h1>Đạt và những chuyến đi</h1>
+</header>
+<div class="gallery">
+<!-- Card 1 -->
+<div class="trip-card">
+	<div class="image-container" id="img-container-1">
+		<img src ="https://statics.vinwonders.com/%C4%91a-lat-o-%C4%91au-02_1700151348.jpg">
+	</div>
+	<div class="card-header-btn">
+		<button class="btn btn-toggle" onclick="toggleDetails(1, this)">Ghi chú & Ảnh</button>
+	</div>
+	<div class="details-container" id="container-1">
+		<div class="details-inner">
+			<input type="file" id="file-1" accept="image/*" style="display:none" onchange="handleImage(1)">
+			<div class="btn-row">
+				<button class="btn btn-upload" onclick="document.getElementById('file-1').click()">Tải ảnh</button>
+				<button class="btn btn-delete" onclick="deleteImage(1)">Xóa</button>
+			</div>
+			<textarea id="desc-1" placeholder="Mô tả...">ĐÀ LẠT
+			Thành phố mộng mơ gắn liền với chuyến du lịch ngoại khoá cùng với lớp C15 đáng iu của tui !!</textarea>
+			<button class="btn btn-save" onclick="saveData(1, this)">Lưu thay đổi</button>
+		</div>
+	</div>
+</div>
+<!-- Card 2 -->
+<div class="trip-card">
+<div class="image-container" id="img-container-2">
+	<img src ="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Bai-sao-phu-quoc-tuonglamphotos.jpg/3840px-Bai-sao-phu-quoc-tuonglamphotos.jpg">
+</div>
+<div class="card-header-btn">
+	<button class="btn btn-toggle" onclick="toggleDetails(2, this)">Ghi chú & Ảnh</button>
+</div>
+<div class="details-container" id="container-2">
+<div class="details-inner">
+<input type="file" id="file-2" accept="image/*" style="display:none" onchange="handleImage(2)">
+	<div class="btn-row">
+		<button class="btn btn-upload" onclick="document.getElementById('file-2').click()">Tải ảnh</button>
+		<button class="btn btn-delete" onclick="deleteImage(2)">Xóa</button>
+	</div>
+<textarea id="desc-2" placeholder="Mô tả...">PHÚ QUỐC
+Còn được gọi là "đảo Ngọc" vì trông nó tuyệt đẹp như một hòn ngọc vậy!!</textarea>
+<button class="btn btn-save" onclick="saveData(2, this)">Lưu thay đổi</button>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="trip-card">
+<div class="image-container" id="img-container-3"><img src =
+"http://www.hoianworldheritage.org.vn/uploads
+/news/2024_09/hero_-_hoi_an.original.jpg"></img></div>
+<div class="card-header-btn"><button class="btn btn-toggle" onclick="toggleDetails(3, this)">Ghi chú & Ảnh</button></div>
+<div class="details-container" id="container-3">
+<div class="details-inner">
+<input type="file" id="file-3" accept="image/*" style="display:none" onchange="handleImage(3)">
+<div class="btn-row"><button class="btn btn-upload" onclick="document.getElementById('file-3').click()">Tải ảnh</button><button class="btn btn-delete" onclick="deleteImage(3)">Xóa</button></div>
+<textarea id="desc-3" placeholder="Mô tả...">HỘI AN
+Thật sự là rất mê những ngọn đèn lung linh tuyệt đẹp của phố cổ Hội An!!</textarea>
+<button class="btn btn-save" onclick="saveData(3, this)">Lưu thay đổi</button>
+</div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="trip-card">
+<div class="image-container" id="img-container-4"><img src ="https://statics.vinwonders.com/meaning-of-hanoi-01_1689915638.jpg"></div>
+<div class="card-header-btn"><button class="btn btn-toggle" onclick="toggleDetails(4, this)">Ghi chú & Ảnh</button></div>
+<div class="details-container" id="container-4">
+<div class="details-inner">
+<input type="file" id="file-4" accept="image/*" style="display:none" onchange="handleImage(4)">
+<div class="btn-row"><button class="btn btn-upload" onclick="document.getElementById('file-4').click()">Tải ảnh</button><button class="btn btn-delete" onclick="deleteImage(4)">Xóa</button></div>
+<textarea id="desc-4" placeholder="Mô tả...">HÀ NỘI
+Một trong những cái tên nằm trong top những thành phố tui yêu thích!!</textarea>
+<button class="btn btn-save" onclick="saveData(4, this)">Lưu thay đổi</button>
+</div>
+</div>
+</div>
+<!-- Card 5 -->
+<div class="trip-card">
+<div class="image-container" id="img-container-5"><img src ="https://cdn.nhandan.vn/images/a66ff20f6c1e5a179e007244f7bfd5c84ff8e4f24f92f2adad15397f1c9349bd5b782c00b0a4a5b63faa3078a954a360632187e4b61a23983e8025954592adc1/trang-an-5882.jpg"></div>
+<div class="card-header-btn"><button class="btn btn-toggle" onclick="toggleDetails(5, this)">Ghi chú & Ảnh</button></div>
+<div class="details-container" id="container-5">
+<div class="details-inner">
+<input type="file" id="file-5" accept="image/*" style="display:none" onchange="handleImage(5)">
+<div class="btn-row"><button class="btn btn-upload" onclick="document.getElementById('file-5').click()">Tải ảnh</button><button class="btn btn-delete" onclick="deleteImage(5)">Xóa</button></div>
+<textarea id="desc-5" placeholder="Mô tả...">NINH BÌNH
+Chắc chắn sẽ lại ghé Tràng An một lần nữa, đợi tui nhé!!</textarea>
+<button class="btn btn-save" onclick="saveData(5, this)">Lưu thay đổi</button>
+</div>
+</div>
+</div>
+</div>
+
+
+<script>
+function toggleDetails(id, btn) {
+const container = document.getElementById(`container-${id}`);
+if (container.style.display === "block") {
+container.style.display = "none";
+btn.innerText = "Ghi chú & Ảnh";
+} else {
+container.style.display = "block";
+btn.innerText = "Đóng lại";
+}
+}
+function handleImage(id) {
+const file = document.getElementById(`file-${id}`).files;
+if (!file || !file[0]) return;
+const reader = new FileReader();
+reader.onloadend = () => {
+localStorage.setItem(`trip-img-${id}`, reader.result);
+displayImage(id, reader.result);
+};
+reader.readAsDataURL(file[0]);
+}
+function deleteImage(id) {
+if (confirm("Xóa ảnh này nhé?")) {
+localStorage.removeItem(`trip-img-${id}`);
+location.reload();
+}
+}
+function displayImage(id, dataUrl) {
+const container = document.getElementById(`img-container-${id}`);
+container.innerHTML = `<img src="${dataUrl}" alt="Trip">`;
+}
+function saveData(id, btn) {
+const text = document.getElementById(`desc-${id}`).value;
+localStorage.setItem(`trip-desc-${id}`, text);
+const originalText = btn.innerText;
+btn.innerText = 'Đã lưu xong!';
+btn.classList.add('success');
+setTimeout(() => {
+btn.innerText = originalText;
+btn.classList.remove('success');
+}, 1200);
+}
+window.onload = () => {
+for (let i = 1; i <= 5; i++) {
+const txt = localStorage.getItem(`trip-desc-${i}`);
+if (txt) document.getElementById(`desc-${i}`).value = txt;
+const img = localStorage.getItem(`trip-img-${i}`);
+if (img) displayImage(i, img);
+}
+}
+</script>
+<p style="text-align: center"><span style="font-weight: bolder"> 12C15 </span><br> Trần Thị Thành Đạt - 12
+</p>
+</body>
+</html>
